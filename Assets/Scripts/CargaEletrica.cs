@@ -10,11 +10,13 @@ public class CargaEletrica : MonoBehaviour {
 	[SerializeField] private Slider slider;
 	[SerializeField] private GameObject setaForca;
 
+	private Dropdown opcoes;
 	private Vector3 screenPoint, offset;
 	private bool possoSerDestruido;
 	private float x, y;
 
 	void Start(){
+		opcoes = GameObject.Find ("OpcoesCarga").GetComponent<Dropdown>();
 		x = setaForca.transform.localScale.x;
 		y = setaForca.transform.localScale.y;
 	}
@@ -26,22 +28,46 @@ public class CargaEletrica : MonoBehaviour {
 		}
 
 		GameObject[] cargas = GameObject.FindGameObjectsWithTag ("Carga");
-		Vector2 forcaRes = Vector2.zero, forca = Vector2.zero, dist = Vector2.zero;
+		Vector2 dist = Vector2.zero;
 
-		for (int i = 0; i < cargas.Length; i++) {
-			if(cargas[i].Equals(this.gameObject)) continue;
-			dist = this.transform.localPosition - cargas[i].transform.localPosition;
-			if (dist.Equals (Vector2.zero))
-				return;
-			forca = (this.valorCarga * AngulacaoLinhaDeCampo.k * cargas[i].GetComponent<CargaEletrica> ().valorCarga /(dist.magnitude*dist.magnitude)) * dist.normalized;
-			forcaRes += forca;
+		if (opcoes.value == 0) {
+			Vector2 forcaRes = Vector2.zero, forca = Vector2.zero;
+
+			for (int i = 0; i < cargas.Length; i++) {
+				if (cargas [i].Equals (this.gameObject))
+					continue;
+				dist = this.transform.localPosition - cargas [i].transform.localPosition;
+				if (dist.Equals (Vector2.zero))
+					return;
+				forca = (this.valorCarga * AngulacaoLinhaDeCampo.k * cargas [i].GetComponent<CargaEletrica> ().valorCarga / (dist.magnitude * dist.magnitude)) * dist.normalized;
+				forcaRes += forca;
+			}
+
+			labelValor.text += forcaRes.magnitude.ToString("F2") + " mN";
+			if (!forcaRes.Equals (Vector2.zero))
+				setaForca.transform.rotation = Quaternion.LookRotation (forcaRes);
+
+			setaForca.transform.localScale = new Vector3 (x, y, forcaRes.magnitude);
+	
+		} else {
+			float potencialEletTotal = 0f, potencialElet, energiaPotencial;
+
+			for (int i = 0; i < cargas.Length; i++) {
+				if (cargas [i].Equals (this.gameObject))
+					continue;
+				dist = this.transform.localPosition - cargas [i].transform.localPosition;
+				if (dist.Equals (Vector2.zero))
+					return;
+				potencialElet = AngulacaoLinhaDeCampo.k * cargas [i].GetComponent<CargaEletrica> ().valorCarga /dist.magnitude;
+				potencialEletTotal += potencialElet;
+			}
+
+			energiaPotencial = potencialEletTotal * this.valorCarga;
+			labelValor.text += energiaPotencial.ToString ("F2") + " mJ";
+			setaForca.transform.localScale = new Vector3 (x, y, 0f);
 		}
 
-		labelValor.text += forcaRes.x.ToString ("F2") + "mN î + " + forcaRes.y.ToString("F2") + "mN ĵ";
-		if(!forcaRes.Equals(Vector2.zero))
-			setaForca.transform.rotation = Quaternion.LookRotation (forcaRes);
-		
-		setaForca.transform.localScale = new Vector3(x, y, forcaRes.magnitude);
+
 	}
 
 	void OnTriggerEnter2D(Collider2D other){

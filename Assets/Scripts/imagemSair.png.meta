@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: b60376d26ac56004ca3d6643b7399919
-timeCreated: 1496047157
+guid: ae5a6c9074c622b4fb553c7e71861bb2
+timeCreated: 1496386931
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -78,7 +78,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: Setas
+  spritePackingTag: Background
   userData: 
   assetBundleName: 
   assetBundleVariant: 

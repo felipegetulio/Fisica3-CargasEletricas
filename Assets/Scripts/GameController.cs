@@ -16,6 +16,11 @@ public class GameController : MonoBehaviour {
 		inputs = hud.transform.GetComponentsInChildren<InputField>();
 	}
 
+	void Update(){
+		if (Input.GetKeyDown (KeyCode.Escape))
+			sair ();
+	}
+
 	public void inserirCargas(){
 		float x = 0f, y = 0f, valorCarga = 10;
 		GameObject obj;
@@ -63,5 +68,9 @@ public class GameController : MonoBehaviour {
 		obj.transform.localPosition = new Vector3(x, y, 0);
 		obj.transform.GetChild (0).GetComponent<Text> ().text = "(" + x.ToString () + ", " + y.ToString () + ")";
 
+	}
+
+	public void sair(){
+		Application.Quit ();
 	}
 }
