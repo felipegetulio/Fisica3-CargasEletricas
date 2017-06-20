@@ -17,7 +17,7 @@ public class AngulacaoLinhaDeCampo : MonoBehaviour {
 		Vector2 campoRes = Vector2.zero;
 
 		for (int i = 0; i < cargas.Length; i++) {
-			Vector2 dist = cargas [i].transform.localPosition - this.transform.localPosition;
+			Vector2 dist = cargas [i].transform.position - this.transform.position;
 			Vector2 campo = (k * cargas [i].GetComponent<CargaEletrica> ().valorCarga /(dist.magnitude*dist.magnitude)) * dist.normalized;
 			campoRes += campo;
 		}

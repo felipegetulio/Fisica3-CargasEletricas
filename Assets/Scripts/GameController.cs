@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour {
 	[SerializeField] private GameObject prefabCarga;
 	[SerializeField] private GameObject prefabMarcador;
 	[SerializeField] private Dropdown opcoes;
+	[SerializeField] private GameObject conjuntoCargas;
+	[SerializeField] private GameObject conjuntoLinhasDeCampo;
 
 	private InputField[] inputs;
 
@@ -42,7 +44,7 @@ public class GameController : MonoBehaviour {
 		catch{
 		}
 		
-		obj = Instantiate(prefabCarga, hud.transform);
+		obj = Instantiate(prefabCarga, conjuntoCargas.transform);
 		obj.transform.localPosition = new Vector3(x, y, 0);
 		obj.transform.GetChild(1).GetComponent<Slider>().value = Mathf.Clamp(valorCarga, -100f, 100f);
 	}
@@ -70,7 +72,27 @@ public class GameController : MonoBehaviour {
 
 	}
 
+	public void mostrarOcultarTextCargas(){
+		GameObject textCarga;
+
+		for (int i = 0; i < conjuntoCargas.transform.childCount; i++) {
+			textCarga = conjuntoCargas.transform.GetChild (i).GetChild (0).gameObject;
+			textCarga.SetActive (!textCarga.activeSelf);
+		}
+	}
+
+	public void mostrarOcultarLinhasDeCampo(){
+		conjuntoLinhasDeCampo.SetActive (!conjuntoLinhasDeCampo.activeSelf);
+	
+	}
+
 	public void sair(){
 		Application.Quit ();
 	}
+
+	public void criarLinhaDeCarga(){
+
+
+	}
+
 }

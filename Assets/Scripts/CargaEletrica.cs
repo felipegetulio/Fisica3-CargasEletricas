@@ -10,12 +10,14 @@ public class CargaEletrica : MonoBehaviour {
 	[SerializeField] private Slider slider;
 	[SerializeField] private GameObject setaForca;
 
+	private ClickManager clique;
 	private Dropdown opcoes;
 	private Vector3 screenPoint, offset;
 	private bool possoSerDestruido;
 	private float x, y;
 
 	void Start(){
+		clique = new ClickManager ();
 		opcoes = GameObject.Find ("OpcoesCarga").GetComponent<Dropdown>();
 		x = setaForca.transform.localScale.x;
 		y = setaForca.transform.localScale.y;
@@ -43,7 +45,7 @@ public class CargaEletrica : MonoBehaviour {
 				forcaRes += forca;
 			}
 
-			labelValor.text += forcaRes.magnitude.ToString("F2") + " mN";
+			labelValor.text += forcaRes.x.ToString("F2") + " mNî " + forcaRes.y.ToString("F2") + "mNĵ";
 			if (!forcaRes.Equals (Vector2.zero))
 				setaForca.transform.rotation = Quaternion.LookRotation (forcaRes);
 
@@ -81,6 +83,7 @@ public class CargaEletrica : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
+
 		screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
 		offset = this.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
 	}
