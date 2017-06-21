@@ -75,8 +75,10 @@ public class GameController : MonoBehaviour {
 		GameObject textCarga;
 		magnetudeForcasAtivada ^= true;
 		for (int i = 0; i < conjuntoCargasPinos.transform.childCount; i++) {
-			textCarga = conjuntoCargasPinos.transform.GetChild (i).GetChild (0).gameObject;
-			textCarga.SetActive (!textCarga.activeSelf);
+			if (conjuntoCargasPinos.transform.GetChild (i).CompareTag ("Carga")) {
+				textCarga = conjuntoCargasPinos.transform.GetChild (i).GetChild (0).gameObject;
+				textCarga.SetActive (!textCarga.activeSelf);
+			}
 		}
 	}
 

@@ -26,6 +26,8 @@ public class Pino : MonoBehaviour {
 
 			for (int i = 0; i < cargas.Length; i++) {
 				dist = this.transform.localPosition - cargas [i].transform.localPosition;
+				if (dist.Equals (Vector2.zero))
+					return;
 				campo = 1000f * (AngulacaoLinhaDeCampo.k * cargas [i].GetComponent<CargaEletrica> ().valorCarga / (dist.magnitude * dist.magnitude)) * dist.normalized;
 				campoRes += campo;
 			}

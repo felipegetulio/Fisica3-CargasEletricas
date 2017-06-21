@@ -10,14 +10,12 @@ public class CargaEletrica : MonoBehaviour {
 	[SerializeField] private Slider slider;
 	[SerializeField] private GameObject setaForca;
 
-	private ClickManager clique;
 	private Dropdown opcoes;
 	private Vector3 screenPoint, offset;
 	private bool possoSerDestruido;
 	private float x, y;
 
 	void Start(){
-		clique = new ClickManager ();
 		opcoes = GameObject.Find ("OpcoesCarga").GetComponent<Dropdown>();
 		x = setaForca.transform.localScale.x;
 		y = setaForca.transform.localScale.y;
