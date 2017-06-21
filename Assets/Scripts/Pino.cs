@@ -25,7 +25,7 @@ public class Pino : MonoBehaviour {
 			Vector2 campoRes = Vector2.zero, campo;
 
 			for (int i = 0; i < cargas.Length; i++) {
-				dist = this.transform.localPosition - cargas [i].transform.localPosition;
+				dist = 100*(this.transform.position - cargas [i].transform.position);
 				if (dist.Equals (Vector2.zero))
 					return;
 				campo = 1000f * (AngulacaoLinhaDeCampo.k * cargas [i].GetComponent<CargaEletrica> ().valorCarga / (dist.magnitude * dist.magnitude)) * dist.normalized;
@@ -42,7 +42,7 @@ public class Pino : MonoBehaviour {
 			float potRes = 0, pot;
 
 			for (int i = 0; i < cargas.Length; i++) {
-				dist = this.transform.localPosition - cargas[i].transform.localPosition;
+				dist = 100*(this.transform.position - cargas[i].transform.position);
 				pot = AngulacaoLinhaDeCampo.k * cargas[i].GetComponent<CargaEletrica>().valorCarga/dist.magnitude;
 				potRes += pot;
 			}

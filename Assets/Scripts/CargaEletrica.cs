@@ -36,14 +36,14 @@ public class CargaEletrica : MonoBehaviour {
 			for (int i = 0; i < cargas.Length; i++) {
 				if (cargas [i].Equals (this.gameObject))
 					continue;
-				dist = this.transform.localPosition - cargas [i].transform.localPosition;
+				dist = 100*(this.transform.position - cargas [i].transform.position);
 				if (dist.Equals (Vector2.zero))
 					return;
 				forca = (this.valorCarga * AngulacaoLinhaDeCampo.k * cargas [i].GetComponent<CargaEletrica> ().valorCarga / (dist.magnitude * dist.magnitude)) * dist.normalized;
 				forcaRes += forca;
 			}
 
-			labelValor.text += forcaRes.ToString () + " mN";
+			labelValor.text += forcaRes.ToString ("F2") + " mN";
 			if (!forcaRes.Equals (Vector2.zero))
 				setaForca.transform.rotation = Quaternion.LookRotation (forcaRes);
 
@@ -55,7 +55,7 @@ public class CargaEletrica : MonoBehaviour {
 			for (int i = 0; i < cargas.Length; i++) {
 				if (cargas [i].Equals (this.gameObject))
 					continue;
-				dist = this.transform.localPosition - cargas [i].transform.localPosition;
+				dist = 100*(this.transform.position - cargas [i].transform.position);
 				if (dist.Equals (Vector2.zero))
 					return;
 				potencialElet = AngulacaoLinhaDeCampo.k * cargas [i].GetComponent<CargaEletrica> ().valorCarga /dist.magnitude;
