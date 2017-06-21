@@ -34,7 +34,7 @@ public class Pino : MonoBehaviour {
 				setaForca.transform.rotation = Quaternion.LookRotation (campoRes);
 
 			setaForca.transform.localScale = new Vector3(x, y, campoRes.magnitude/20);
-			valorOpcao.text = campoRes.magnitude.ToString ("F2") + " N/C";
+			valorOpcao.text = campoRes.ToString() + " N/C";
 
 		} else if (opcoes.value == 1) { //se é pra caluclar o potencial elétrico
 			float potRes = 0, pot;

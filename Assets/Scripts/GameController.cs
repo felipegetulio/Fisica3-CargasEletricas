@@ -9,14 +9,11 @@ public class GameController : MonoBehaviour {
 	[SerializeField] private GameObject prefabCarga;
 	[SerializeField] private GameObject prefabMarcador;
 	[SerializeField] private Dropdown opcoes;
-	[SerializeField] private GameObject conjuntoCargas;
+	[SerializeField] private GameObject conjuntoCargasPinos;
 	[SerializeField] private GameObject conjuntoLinhasDeCampo;
+	[SerializeField] private InputField[] inputs;
 
-	private InputField[] inputs;
-
-	void Start(){
-		inputs = hud.transform.GetComponentsInChildren<InputField>();
-	}
+	private bool magnetudeForcasAtivada = false;
 
 	void Update(){
 		if (Input.GetKeyDown (KeyCode.Escape))
@@ -25,7 +22,7 @@ public class GameController : MonoBehaviour {
 
 	public void inserirCargas(){
 		float x = 0f, y = 0f, valorCarga = 10;
-		GameObject obj;
+		GameObject obj, textCarga;;
 		try{
 			x = float.Parse(inputs[0].text);
 		}
@@ -44,9 +41,12 @@ public class GameController : MonoBehaviour {
 		catch{
 		}
 		
-		obj = Instantiate(prefabCarga, conjuntoCargas.transform);
+		obj = Instantiate(prefabCarga, conjuntoCargasPinos.transform);
 		obj.transform.localPosition = new Vector3(x, y, 0);
 		obj.transform.GetChild(1).GetComponent<Slider>().value = Mathf.Clamp(valorCarga, -100f, 100f);
+
+		textCarga = obj.transform.GetChild (0).gameObject;
+		textCarga.SetActive (magnetudeForcasAtivada);
 	}
 
 	public void marcarPosicao(){
@@ -65,18 +65,17 @@ public class GameController : MonoBehaviour {
 		catch{
 		}
 
-		obj = Instantiate (prefabMarcador, hud.transform);
+		obj = Instantiate (prefabMarcador, conjuntoCargasPinos.transform);
 		obj.GetComponent<Pino> ().opcoes = opcoes;
 		obj.transform.localPosition = new Vector3(x, y, 0);
 		obj.transform.GetChild (0).GetComponent<Text> ().text = "(" + x.ToString () + ", " + y.ToString () + ")";
-
 	}
 
 	public void mostrarOcultarTextCargas(){
 		GameObject textCarga;
-
-		for (int i = 0; i < conjuntoCargas.transform.childCount; i++) {
-			textCarga = conjuntoCargas.transform.GetChild (i).GetChild (0).gameObject;
+		magnetudeForcasAtivada ^= true;
+		for (int i = 0; i < conjuntoCargasPinos.transform.childCount; i++) {
+			textCarga = conjuntoCargasPinos.transform.GetChild (i).GetChild (0).gameObject;
 			textCarga.SetActive (!textCarga.activeSelf);
 		}
 	}

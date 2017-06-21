@@ -45,7 +45,7 @@ public class CargaEletrica : MonoBehaviour {
 				forcaRes += forca;
 			}
 
-			labelValor.text += forcaRes.x.ToString("F2") + " mNî " + forcaRes.y.ToString("F2") + "mNĵ";
+			labelValor.text += forcaRes.ToString () + " mN";
 			if (!forcaRes.Equals (Vector2.zero))
 				setaForca.transform.rotation = Quaternion.LookRotation (forcaRes);
 
