@@ -92,7 +92,7 @@ public class GameController : MonoBehaviour {
 
 		if(numeroValido(ref cargaTotal, circuloCargaTotal.text) && numeroValido(ref raio, circuloRaio.text) && numeroValido(ref qntCargas, circuloQntCargas.text)){
 			if(qntCargas == 1){
-				instanciarCarga (0, 0, cargaTotal, conjuntoLinha.transform);
+				instanciarCarga (0, 0, cargaTotal, conjuntoCirculo.transform);
 				return;
 			}
 			anguloEntreCargas = 2*Mathf.PI/qntCargas;
